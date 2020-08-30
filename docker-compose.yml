@@ -1,0 +1,17 @@
+version: "3.5"
+
+services:
+  app:
+    volumes:
+        - ./server:/python/app
+    build: .
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+    ports:
+      - "8000:8000"
+    # tty: true
+    depends_on:
+        - mongo
+  mongo:
+    image: mongo:4.2.0
+    ports:
+        - "27017:27017"
