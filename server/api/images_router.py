@@ -15,7 +15,7 @@ class ImageGetList(BaseModel):
 
 
 @images_router.get('/{image_id}', response_model=ImageGetOutput)
-async def get_image(image_id):
+async def get_image(image_id: str):
     """ Get an image """
 
     image = await Image.find_one(id=image_id)
