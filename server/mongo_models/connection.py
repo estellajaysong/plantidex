@@ -1,3 +1,3 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 
-DB = AsyncIOMotorClient('localhost', 27017).plantidex
+DB = AsyncIOMotorClient(host='mongo', port=27017).plantidex
