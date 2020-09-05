@@ -4,6 +4,8 @@ An image repository for plants.
 You can find it hosted at.
 Or if you have the time and interest, you can set it up locally, which involves:
  - Running a script to scrape Google images for plant images
+ 
+ - async
 
 ## Start the server
 ```
