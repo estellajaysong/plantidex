@@ -1,4 +1,5 @@
 from pydantic import BaseModel, validator, Field
+from shortuuid import ShortUUID
 from typing import Dict, Any
 import json
 from fastapi.encoders import jsonable_encoder
@@ -7,26 +8,14 @@ from .connection import db
 from .utils import timestamp_now, JSONEncoder
 
 
-class PydanticObjectId(ObjectId):
-    """
-    Validator for <class 'bson.objectid.ObjectId'> because it's not a valid Pydantic field type
-    """
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, v):
-        if not isinstance(v, ObjectId):
-            raise TypeError('ObjectId required')
-        return str(v)
-
-
 class BaseMongoDB(BaseModel):
-    id: PydanticObjectId = Field(PydanticObjectId, alias='_id')
-    # id: str = None
+    id: str = None
     created_at: int = None
     updated_at: int = None
+
+    @validator('id', pre=True, always=True, check_fields=False)
+    def set_id(cls, id):
+        return id or ShortUUID().random(length=10)
 
     @validator('created_at', pre=True, always=True, check_fields=False)
     def set_created_at(cls, timestamp):
@@ -48,7 +37,6 @@ class BaseMongoDB(BaseModel):
 
     @classmethod
     async def insert_many(cls, resources):
-        print(json.dumps(resources[0], cls=JSONEncoder), flush=True)
         # json_resources = [json.dumps(resource, cls=JSONEncoder) for resource in resources]
-        # # json_resources = [jsonable_encoder(resource) for resource in resources]
-        # await db[cls.col_name].insert_many(json_resources)
+        json_resources = [jsonable_encoder(resource) for resource in resources]
+        await db[cls.col_name].insert_many(json_resources)
