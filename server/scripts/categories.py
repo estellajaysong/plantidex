@@ -10,5 +10,5 @@ categories = [
     'Arbutus menziesii',
     'Cornus Eddie\'s White Wonder',
     'Sorbus aucuparia',
-    'Acer circinatum'
+    'Acer circinatum',
 ]

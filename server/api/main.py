@@ -11,6 +11,7 @@ app.include_router(images_router, prefix='/images')
 
 @app.on_event('startup')
 async def startup_events():
+    logger.info('Seeding database')
     await seed_db()
     pass
 

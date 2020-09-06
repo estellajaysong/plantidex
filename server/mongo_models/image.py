@@ -1,10 +1,11 @@
 from pydantic import BaseModel
 from typing import List, ClassVar
+from bson import ObjectId
 from .base import BaseMongoDB
 
 
 class Size(BaseModel):
-    length: int
+    height: int
     width: int
     byte_size: int
 
@@ -12,7 +13,7 @@ class Size(BaseModel):
 class Image(BaseMongoDB):
     col_name: ClassVar[str] = 'images'
 
-    plant_id: str
+    # plant_id: ObjectId
     # tags: List[str] = []
-    path: str
+    file_name: str
     size: Size
