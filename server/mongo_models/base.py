@@ -1,9 +1,10 @@
 from pydantic import BaseModel, validator, Field
 from typing import Dict, Any
+import json
 from fastapi.encoders import jsonable_encoder
 from bson import ObjectId
 from .connection import db
-from .utils import timestamp_now
+from .utils import timestamp_now, JSONEncoder
 
 
 class PydanticObjectId(ObjectId):
@@ -23,6 +24,7 @@ class PydanticObjectId(ObjectId):
 
 class BaseMongoDB(BaseModel):
     id: PydanticObjectId = Field(PydanticObjectId, alias='_id')
+    # id: str = None
     created_at: int = None
     updated_at: int = None
 
@@ -46,5 +48,7 @@ class BaseMongoDB(BaseModel):
 
     @classmethod
     async def insert_many(cls, resources):
-        json_resources = [jsonable_encoder(resource) for resource in resources]
-        await db[cls.col_name].insert_many(json_resources)
+        print(json.dumps(resources[0], cls=JSONEncoder), flush=True)
+        # json_resources = [json.dumps(resource, cls=JSONEncoder) for resource in resources]
+        # # json_resources = [jsonable_encoder(resource) for resource in resources]
+        # await db[cls.col_name].insert_many(json_resources)

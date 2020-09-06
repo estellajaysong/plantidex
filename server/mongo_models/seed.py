@@ -43,11 +43,12 @@ async def seed_db():
             logger.warning(f'Unable to interpret file at {file_path}: Removing file')
             os.remove(path=file_path)
         width, height = pil_image.size
-        
+
         db_image = Image(
             plant_id=plant.id,
             file_name=file_name,
             size=Size(height=height, width=width, byte_size=byte_size),
         )
         db_images.append(db_image)
-    await Image.insert_many(resources=db_images)
+    blah = await Image.insert_many(resources=db_images)
+    print(blah)
