@@ -5,5 +5,5 @@ from .base import BaseMongoDB
 
 class Plant(BaseMongoDB):
     scientific_name: str
-    aliases: List[str]
+    # aliases: List[str]
     # characteristics: List[str]

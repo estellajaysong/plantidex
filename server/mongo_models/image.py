@@ -13,6 +13,6 @@ class Image(BaseMongoDB):
     col_name: ClassVar[str] = 'images'
 
     plant_id: str
-    tags: List[str] = []
+    # tags: List[str] = []
     path: str
     size: Size

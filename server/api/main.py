@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from mongo_models import DB
+from loguru import logger
+from mongo_models import config, seed_db
 from .images_router import images_router
 
 
@@ -10,6 +11,7 @@ app.include_router(images_router, prefix='/images')
 
 @app.on_event('startup')
 async def startup_events():
+    await seed_db()
     pass
 
 
