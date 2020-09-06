@@ -11,13 +11,13 @@ from .connection import db
 async def seed_db():
     """ Seed the plants and images in the db """
     # Check to see if db is empty
+    if await db[Plant.col_name].count_documents(filter={}):
+        logger.info(f'Database is not empty: Skip seeding')
+        return
+    # Seed plants
     logger.info("Seeding plants")
-    # if await db[Plant.col_name].count_documents(filter={}):
-    #     logger.info(f'Database is not empty: Skip seeding')
-    #     return
-    # # Seed plants
-    # db_plants = [Plant(scientific_name=plant) for plant in plants]
-    # await Plant.insert_many(resources=db_plants)
+    db_plants = [Plant(scientific_name=plant) for plant in plants]
+    await Plant.insert_many(resources=db_plants)
     # Seed images
     logger.info("Seeding images")
     images_dir = 'images'
@@ -50,5 +50,5 @@ async def seed_db():
             size=Size(height=height, width=width, byte_size=byte_size),
         )
         db_images.append(db_image)
-    blah = await Image.insert_many(resources=db_images)
-    print(blah)
+    await Image.insert_many(resources=db_images)
+    logger.info('Seeds planted')

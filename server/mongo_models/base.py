@@ -1,11 +1,9 @@
-from pydantic import BaseModel, validator, Field
+from pydantic import BaseModel, validator
 from shortuuid import ShortUUID
 from typing import Dict, Any
-import json
 from fastapi.encoders import jsonable_encoder
-from bson import ObjectId
 from .connection import db
-from .utils import timestamp_now, JSONEncoder
+from .utils import timestamp_now
 
 
 class BaseMongoDB(BaseModel):
@@ -37,6 +35,5 @@ class BaseMongoDB(BaseModel):
 
     @classmethod
     async def insert_many(cls, resources):
-        # json_resources = [json.dumps(resource, cls=JSONEncoder) for resource in resources]
         json_resources = [jsonable_encoder(resource) for resource in resources]
         await db[cls.col_name].insert_many(json_resources)
