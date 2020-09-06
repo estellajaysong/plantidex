@@ -1,6 +1,5 @@
-from pydantic import BaseModel, Field
-from typing import List, ClassVar
-from bson import ObjectId
+from pydantic import BaseModel
+from typing import ClassVar
 from .base import BaseMongoDB
 
 

@@ -1,5 +1,4 @@
-from pydantic import BaseModel
-from typing import List, ClassVar, Optional
+from typing import ClassVar, Optional
 from .base import BaseMongoDB
 
 
