@@ -14,6 +14,15 @@ class ImageGetList(BaseModel):
     images: List[Image]
 
 
+@images_router.get('/search')
+async def search_images(text: str):
+    """ Search images """
+
+    images = await Image.find_by_text()
+
+    return {'images': images}
+
+
 @images_router.get('/{image_id}', response_model=ImageGetOutput)
 async def get_image(image_id: str):
     """ Get an image """

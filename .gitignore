@@ -135,3 +135,5 @@ dmypy.json
 
 # Config
 config.sh
+
+test*
