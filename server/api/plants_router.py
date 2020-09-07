@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
 from mongo_models import Plant
@@ -18,15 +18,18 @@ class PlantGetList(BaseModel):
 async def get_plant(plant_id: str):
     """ Get an plant """
 
-    plant = await Plant.find_one(id=plant_id)
+    plant = await Plant.find_by_id(id=plant_id)
 
-    return {'plant': plant}
+    if plant:
+        return {'plant': plant}
+    else:
+        raise HTTPException(status_code=404, detail=f'Plant with id {plant_id} could not be found')
 
 
 @plants_router.get('/', response_model=PlantGetList)
 async def get_all_plants():
     """ Get list of all plants """
 
-    plants = await Plant.find()
+    plants = await Plant.find_all()
 
     return {'plants': plants}

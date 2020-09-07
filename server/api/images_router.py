@@ -1,5 +1,5 @@
 from enum import Enum
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from typing import List
 from mongo_models import Image
@@ -24,6 +24,7 @@ class ImageGetList(BaseModel):
 @images_router.get('/search')
 async def search_images(text: str = None, size: SizeEnum = None):
     """ Search images """
+
     if text:
         images = await Image.find_by_file_name_contains(substring=text)
 
@@ -36,7 +37,10 @@ async def get_image(image_id: str):
 
     image = await Image.find_by_id(id=image_id)
 
-    return {'image': image}
+    if image:
+        return {'image': image}
+    else:
+        raise HTTPException(status_code=404, detail=f'Image with id {image_id} could not be found')
 
 
 @images_router.get('/', response_model=ImageGetList)
