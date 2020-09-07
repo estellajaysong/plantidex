@@ -26,8 +26,11 @@ class Image(BaseMongoDB):
 
         query = {}
         if text:
+            # Filter so the file_name contains the substring text
             query['file_name'] = {'$regex': text}
         if size:
+            # Filter so the length of the image (the larger of image width and
+            # image height) is within the range specified in image_size_map
             query['$or'] = [
                 {
                     'size.height': {
