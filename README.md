@@ -24,5 +24,3 @@ API reference can be found at [http://localhost:8000/redoc](http://localhost:800
 
 ## Motivation
 I love plants. A while ago I started doing the [fast.ai Practical Deep Learning for Coders course](https://course.fast.ai/), and it's been at the top of my mind to try my hand at building a plant identification app ever since.
-
-.
