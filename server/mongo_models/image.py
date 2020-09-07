@@ -1,5 +1,6 @@
 from pydantic import BaseModel
-from typing import ClassVar, List
+from typing import ClassVar, Optional, List
+from base_models import QuerySizeEnum
 from .connection import db
 from .base import BaseMongoDB
 
@@ -14,15 +15,17 @@ class Image(BaseMongoDB):
     col_name: ClassVar[str] = 'images'
 
     plant_id: str
-    # tags: List[str] = []
     file_name: str
     size: Size
 
     @classmethod
-    async def find_by_file_name_contains(cls, substring: str) -> List['Image']:
-        """ Find images by a substring that the file_name contains """
+    async def search_by_text_or_size(cls, text: Optional[str], size: QuerySizeEnum) -> List['Image']:
+        """ Find images by file name or size or combination """
+        query = {}
+        if text:
+            query['file_name'] = {'$regex': text}
 
         images = []
-        async for raw in db[cls.col_name].find({'file_name': {'$regex': substring}}):
+        async for raw in db[cls.col_name].find(query):
             images.append(cls(**raw))
         return images
