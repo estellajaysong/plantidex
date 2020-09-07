@@ -1,13 +1,17 @@
+import imagehash
 from time import time
 from PIL import Image
-import imagehash
+from typing import List
 
 
 def timestamp_now():
     return int(time())
 
 
-hash = imagehash.average_hash(Image.open('test.jpg'))
-otherhash = imagehash.average_hash(Image.open('test_matchish.jpeg'))
+# def compare_images(original_imag_hash: Image, comparison: Image):
+#     """ Compare original image against many images to find similar images"""
 
-print(hash - otherhash)
+#     og_image_hash = imagehash.average_hash(Image.open(original_image))
+#     for 
+#     other_hash = imagehash.average_hash(Image.open('test_matchish.jpeg'))
+#     print(hash - otherhash)

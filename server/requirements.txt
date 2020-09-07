@@ -10,6 +10,7 @@ Pillow==7.2.0
 pydantic==1.6.1
 pymongo==3.11.0
 PyWavelets==1.1.1
+requests==2.22.0
 scipy==1.5.2
 shortuuid==1.0.1
 starlette==0.13.6

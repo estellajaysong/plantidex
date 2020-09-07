@@ -4,6 +4,12 @@ from base_models import QuerySizeEnum, image_size_map
 from .connection import db
 from .base import BaseMongoDB
 
+import requests
+import imagehash
+from time import time
+from PIL import Image as PilImage
+from typing import List
+
 
 class Size(BaseModel):
     height: int
@@ -57,7 +63,10 @@ class Image(BaseMongoDB):
 
     @classmethod
     async def search_by_image(
-        cls, url: Optional[str], attachment: QuerySizeEnum
+        cls, url: Optional[str], attachment: str
     ) -> List['Image']:
-        
-        pass
+        if url:
+            og_image_hash = imagehash.average_hash(PilImage.open(url))
+    # otherhash = imagehash.average_hash(Image.open('test_matchish.jpeg'))
+
+    # print(hash - otherhash)

@@ -15,6 +15,11 @@ class ImageGetList(BaseModel):
     images: List[Image]
 
 
+class ImagePostInput(BaseModel):
+    url: str = None
+    attachment: str = None
+
+
 @images_router.get('/{image_id}', response_model=ImageGetOutput)
 async def get_image(image_id: str):
     """ Get an image """
@@ -52,14 +57,13 @@ async def search_images(text: str = None, size: QuerySizeEnum = None):
 
 
 @images_router.post('/search', response_model=ImageGetList)
-async def search_by_image(image_url: str = None, attachment: str = None):
+async def search_by_image(image: ImagePostInput):
     """ Search similar images by image """
-
     # if not image_url or attachment:
     #     raise HTTPException(
     #     status_code=400,
     #     detail='No image_url ')
-    images = await Image.search_by_image(url=url)
+    images = await Image.search_by_image(url=image.url, attachment=image.attachment)
 
     # hash = imagehash.average_hash(Image.open('test.jpg'))
     return {'images': images}
