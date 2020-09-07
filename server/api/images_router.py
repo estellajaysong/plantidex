@@ -15,18 +15,6 @@ class ImageGetList(BaseModel):
     images: List[Image]
 
 
-@images_router.get('/search', response_model=ImageGetList)
-async def search_images(text: str = None, size: QuerySizeEnum = None):
-    """ Search images by file name or size or combination """
-
-    if not text and not size:
-        images = await Image.find_all()
-    else:
-        images = await Image.search_by_text_or_size(text=text, size=size)
-
-    return {'images': images}
-
-
 @images_router.get('/{image_id}', response_model=ImageGetOutput)
 async def get_image(image_id: str):
     """ Get an image """
@@ -48,4 +36,30 @@ async def get_all_images():
 
     images = await Image.find_all()
 
+    return {'images': images}
+
+
+@images_router.get('/search', response_model=ImageGetList)
+async def search_images(text: str = None, size: QuerySizeEnum = None):
+    """ Search images by file name or size or combination """
+
+    if not text and not size:
+        images = await Image.find_all()
+    else:
+        images = await Image.search_by_text_or_size(text=text, size=size)
+
+    return {'images': images}
+
+
+@images_router.post('/search', response_model=ImageGetList)
+async def search_by_image(image_url: str = None, attachment: str = None):
+    """ Search similar images by image """
+
+    # if not image_url or attachment:
+    #     raise HTTPException(
+    #     status_code=400,
+    #     detail='No image_url ')
+    images = await Image.search_by_image(url=url)
+
+    # hash = imagehash.average_hash(Image.open('test.jpg'))
     return {'images': images}

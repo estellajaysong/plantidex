@@ -54,3 +54,10 @@ class Image(BaseMongoDB):
         async for raw in db[cls.col_name].find(query):
             images.append(cls(**raw))
         return images
+
+    @classmethod
+    async def search_by_image(
+        cls, url: Optional[str], attachment: QuerySizeEnum
+    ) -> List['Image']:
+        
+        pass
