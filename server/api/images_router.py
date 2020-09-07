@@ -18,7 +18,7 @@ class ImageGetList(BaseModel):
 async def search_images(text: str):
     """ Search images """
 
-    images = await Image.find_by_text()
+    images = await Image.find_by_file_name_contains(substring=text)
 
     return {'images': images}
 

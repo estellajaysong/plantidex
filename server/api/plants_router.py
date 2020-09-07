@@ -7,20 +7,11 @@ plants_router = APIRouter()
 
 
 class PlantGetOutput(BaseModel):
-    Plant: Plant
+    plant: Plant
 
 
 class PlantGetList(BaseModel):
     plants: List[Plant]
-
-
-@plants_router.get('/search')
-async def search_plants(text: str):
-    """ Search plants """
-
-    plants = await Plant.find_by_text()
-
-    return {'plants': plants}
 
 
 @plants_router.get('/{plant_id}', response_model=PlantGetOutput)
