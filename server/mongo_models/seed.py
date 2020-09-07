@@ -12,7 +12,7 @@ async def seed_db():
     """ Seed the plants and images in the db """
     # Check to see if db is empty
     if await db[Plant.col_name].count_documents(filter={}):
-        logger.info(f'Database is not empty: Skip seeding')
+        logger.info('Database is not empty: Skip seeding')
         return
     # Seed plants
     logger.info("Seeding plants")
