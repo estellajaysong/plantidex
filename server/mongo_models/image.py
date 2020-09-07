@@ -9,7 +9,8 @@ import imagehash
 from time import time
 from PIL import Image as PilImage
 from typing import List
-
+from io import BytesIO
+from base_models import image_directory
 
 class Size(BaseModel):
     height: int
@@ -65,8 +66,13 @@ class Image(BaseMongoDB):
     async def search_by_image(
         cls, url: Optional[str], attachment: str
     ) -> List['Image']:
+        similar_images = []
         if url:
-            og_image_hash = imagehash.average_hash(PilImage.open(url))
-    # otherhash = imagehash.average_hash(Image.open('test_matchish.jpeg'))
-
-    # print(hash - otherhash)
+            response = requests.get(url)
+            og_image_hash = imagehash.average_hash(PilImage.open(BytesIO(response.content)))
+        for image in await cls.find_all():
+            compare_image_hash = imagehash.average_hash(PilImage.open(f'{image_directory}/{image.file_name}'))
+            difference = og_image_hash - compare_image_hash
+            if difference <= 20:
+                print(difference)
+                print(image)

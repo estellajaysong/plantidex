@@ -12,3 +12,6 @@ image_size_map = {
     QuerySizeEnum.MEDIUM: Range(min_px=500, max_px=999),
     QuerySizeEnum.LARGE: Range(min_px=1000, max_px=None),
 }
+
+
+image_directory = 'images'
