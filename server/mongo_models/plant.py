@@ -9,8 +9,12 @@ class Plant(BaseMongoDB):
     scientific_name: str
 
     @classmethod
-    async def find_by_scientific_name(cls, scientific_name: str) -> Optional['Plant']:
+    async def find_by_scientific_name(
+        cls, scientific_name: str
+    ) -> Optional['Plant']:
         """ Find one plant by its scientific name """
 
-        raw = await db[cls.col_name].find_one({'scientific_name': scientific_name})
+        raw = await db[cls.col_name].find_one(
+            {'scientific_name': scientific_name}
+        )
         return cls(**raw) if raw else None

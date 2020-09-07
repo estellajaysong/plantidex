@@ -36,7 +36,10 @@ async def get_image(image_id: str):
     if image:
         return {'image': image}
     else:
-        raise HTTPException(status_code=404, detail=f'Image with id {image_id} could not be found')
+        raise HTTPException(
+            status_code=404,
+            detail=f'Image with id {image_id} could not be found',
+        )
 
 
 @images_router.get('/', response_model=ImageGetList)

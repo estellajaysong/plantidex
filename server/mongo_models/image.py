@@ -19,8 +19,11 @@ class Image(BaseMongoDB):
     size: Size
 
     @classmethod
-    async def search_by_text_or_size(cls, text: Optional[str], size: QuerySizeEnum) -> List['Image']:
+    async def search_by_text_or_size(
+        cls, text: Optional[str], size: QuerySizeEnum
+    ) -> List['Image']:
         """ Find images by file name or size or combination """
+
         query = {}
         if text:
             query['file_name'] = {'$regex': text}

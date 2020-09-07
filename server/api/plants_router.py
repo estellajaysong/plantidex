@@ -23,7 +23,10 @@ async def get_plant(plant_id: str):
     if plant:
         return {'plant': plant}
     else:
-        raise HTTPException(status_code=404, detail=f'Plant with id {plant_id} could not be found')
+        raise HTTPException(
+            status_code=404,
+            detail=f'Plant with id {plant_id} could not be found',
+        )
 
 
 @plants_router.get('/', response_model=PlantGetList)

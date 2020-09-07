@@ -40,7 +40,9 @@ async def seed_db():
         try:
             pil_image = PIL_Image.open(file_path)
         except UnidentifiedImageError:
-            logger.warning(f'Unable to interpret file at {file_path}: Removing file')
+            logger.warning(
+                f'Unable to interpret file at {file_path}: Removing file'
+            )
             os.remove(path=file_path)
         width, height = pil_image.size
 
