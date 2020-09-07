@@ -34,7 +34,7 @@ async def search_images(text: str = None, size: SizeEnum = None):
 async def get_image(image_id: str):
     """ Get an image """
 
-    image = await Image.find_one(id=image_id)
+    image = await Image.find_by_id(id=image_id)
 
     return {'image': image}
 
@@ -43,6 +43,6 @@ async def get_image(image_id: str):
 async def get_all_images():
     """ Get list of all images """
 
-    images = await Image.find()
+    images = await Image.find_all()
 
     return {'images': images}

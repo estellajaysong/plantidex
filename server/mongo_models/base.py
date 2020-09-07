@@ -24,16 +24,21 @@ class BaseMongoDB(BaseModel):
         return timestamp or timestamp_now()
 
     @classmethod
-    async def find_one(cls, query: Dict[Any, Any] = dict()):
-        resource = await db[cls.col_name].find_one(query)
+    async def find_by_id(cls, id: str):
+        """ Find the document of resource type by id """
+        resource = await db[cls.col_name].find_one({'id': id})
         return resource
 
     @classmethod
-    async def find(cls, query: Dict[Any, Any] = dict()):
-        resources = await db[cls.col_name].find(query)
+    async def find_all(cls):
+        """ Find all documents of resource type """
+        resources = []
+        async for raw in db[cls.col_name].find():
+            resources.append(cls(**raw))
         return resources
 
     @classmethod
     async def insert_many(cls, resources):
+        """ JSON encode and insert resources """
         json_resources = [jsonable_encoder(resource) for resource in resources]
         await db[cls.col_name].insert_many(json_resources)
