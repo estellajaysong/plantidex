@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from typing import ClassVar, Optional, List
-from base_models import QuerySizeEnum
+from base_models import QuerySizeEnum, image_size_map
 from .connection import db
 from .base import BaseMongoDB
 
@@ -27,6 +27,23 @@ class Image(BaseMongoDB):
         query = {}
         if text:
             query['file_name'] = {'$regex': text}
+        if size:
+            query['$or'] = [
+                {
+                    'size.height': {
+                        '$gte': image_size_map[size].min_px,
+                        '$lte': image_size_map[size].max_px,
+                    },
+                    '$expr': {'$gte': ['$size.height', '$size.width']},
+                },
+                {
+                    'size.width': {
+                        '$gte': image_size_map[size].min_px,
+                        '$lte': image_size_map[size].max_px,
+                    },
+                    '$expr': {'$gte': ['$size.width', '$size.height']},
+                },
+            ]
 
         images = []
         async for raw in db[cls.col_name].find(query):
