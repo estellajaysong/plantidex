@@ -1,9 +1,16 @@
+from enum import Enum
 from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import List
 from mongo_models import Image
 
 images_router = APIRouter()
+
+
+class SizeEnum(str, Enum):
+    SMALL = 'small'
+    MEDIUM = 'medium'
+    LARGE = 'large'
 
 
 class ImageGetOutput(BaseModel):
@@ -15,10 +22,10 @@ class ImageGetList(BaseModel):
 
 
 @images_router.get('/search')
-async def search_images(text: str):
+async def search_images(text: str = None, size: SizeEnum = None):
     """ Search images """
-
-    images = await Image.find_by_file_name_contains(substring=text)
+    if text:
+        images = await Image.find_by_file_name_contains(substring=text)
 
     return {'images': images}
 
