@@ -15,10 +15,8 @@ class ImageGetList(BaseModel):
     images: List[Image]
 
 
-@images_router.get('/search')
-async def search_images(
-    text: str = None, size: QuerySizeEnum = None, response_model=ImageGetList
-):
+@images_router.get('/search', response_model=ImageGetList)
+async def search_images(text: str = None, size: QuerySizeEnum = None):
     """ Search images by file name or size or combination """
 
     if not text and not size:
