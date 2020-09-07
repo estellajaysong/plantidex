@@ -31,19 +31,21 @@ class Image(BaseMongoDB):
         if size:
             # Filter so the length of the image (the larger of image width and
             # image height) is within the range specified in image_size_map
+
+            length_range = {'$gte': image_size_map[size].min_px}
+
+            # Large images do not have a max length, so filter max length only
+            # when applicable
+            if image_size_map[size].max_px:
+                length_range['$lte'] = image_size_map[size].max_px
+
             query['$or'] = [
                 {
-                    'size.height': {
-                        '$gte': image_size_map[size].min_px,
-                        '$lte': image_size_map[size].max_px,
-                    },
+                    'size.height': length_range,
                     '$expr': {'$gte': ['$size.height', '$size.width']},
                 },
                 {
-                    'size.width': {
-                        '$gte': image_size_map[size].min_px,
-                        '$lte': image_size_map[size].max_px,
-                    },
+                    'size.width': length_range,
                     '$expr': {'$gte': ['$size.width', '$size.height']},
                 },
             ]
