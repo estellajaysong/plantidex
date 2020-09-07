@@ -31,8 +31,8 @@ async def seed_db():
         plant = await Plant.find_by_scientific_name(scientific_name=plant_name)
         if not plant:
             logger.warning(
-                f'Could not find plant with scientific name {plant_name} to link to image '
-                f'{file_name}: Skipping image'
+                f'Could not find plant with scientific name {plant_name} to '
+                f'link to image {file_name}: Skipping image'
             )
             continue
         file_path = f'{images_dir}/{file_name}'

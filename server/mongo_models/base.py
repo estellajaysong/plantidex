@@ -1,6 +1,5 @@
 from pydantic import BaseModel, validator
 from shortuuid import ShortUUID
-from typing import Dict, Any
 from fastapi.encoders import jsonable_encoder
 from .connection import db
 from .utils import timestamp_now
