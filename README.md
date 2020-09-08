@@ -1,5 +1,5 @@
 # Plantidex
-An asynchronous plant image repository API.
+An asynchronous plant image repository API. You can find it deployed at: [http://plantidex.herokuapp.com/images](http://plantidex.herokuapp.com/images/)
 
 ## Stack
 - Python3
@@ -34,4 +34,4 @@ docker-compose logs -f app
 ```
 
 ## API reference
-API reference can be found at [http://localhost:8000/redoc](http://localhost:8000/redoc) once you start the server
+API reference can be found at [http://plantidex.herokuapp.com/redoc](http://plantidex.herokuapp.com/redoc) or [http://localhost:8000/redoc](http://localhost:8000/redoc) once you start the server locally
