@@ -1,11 +1,22 @@
 # Plantidex
+An asynchronous plant image repository API.
 
-An image repository for plants.
-You can find it hosted at.
-Or if you have the time and interest, you can set it up locally, which involves:
- - Running a script to scrape Google images for plant images
- 
- - async
+## Motivation
+I love plants. A while ago I started doing the [fast.ai Practical Deep Learning for Coders course](https://course.fast.ai/), and it's been at the top of my mind to try my hand at building a plant identification app ever since.
+
+## Stack
+- Python3
+- Docker
+- FastAPI
+- MongoDB
+
+## Features
+- Dockerized 
+- Easy setup (one command) with automated seeding if database is empty
+- Asynchronous
+- Strongly typed and validated with [Pydantic](https://pydantic-docs.helpmanual.io/)
+- API reference generated from code (classes, typing, docstrings), which is a source of truth
+- Search images by text, size, or another image (via image hashing)
 
 ## Start the server
 ```
@@ -20,7 +31,4 @@ docker-compose logs -f app
 ```
 
 ## API reference
-API reference can be found at [http://localhost:8000/redoc](http://localhost:8000/redoc)
-
-## Motivation
-I love plants. A while ago I started doing the [fast.ai Practical Deep Learning for Coders course](https://course.fast.ai/), and it's been at the top of my mind to try my hand at building a plant identification app ever since.
+API reference can be found at [http://localhost:8000/redoc](http://localhost:8000/redoc) once you start the server
