@@ -4,8 +4,6 @@ from mongo_models import seed_db
 from .images_router import images_router
 from .plants_router import plants_router
 
-print("RUNNING THIS FILE")
-
 
 app = FastAPI()
 
