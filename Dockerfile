@@ -7,3 +7,6 @@ COPY ./server /python/app
 
 # Install pip packages
 RUN pip install -r requirements.txt
+
+# Start docker-compose
+CMD ["docker-compose", "up"]
