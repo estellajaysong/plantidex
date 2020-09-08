@@ -18,6 +18,12 @@ I love plants. A while ago I started doing the [fast.ai Practical Deep Learning 
 - API reference generated from code (classes, typing, docstrings), which is a source of truth
 - Search images by text, size, or another image (via image hashing)
 
+## Future features
+- Plant identification by image
+- Plant idenfitication by characteristics
+- CRUD operations on plants and images
+- Deployment
+
 ## Start the server
 ```
 # Start the server
