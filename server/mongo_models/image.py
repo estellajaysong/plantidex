@@ -1,16 +1,15 @@
-from pydantic import BaseModel
-from typing import ClassVar, Optional, List
-from base_models import QuerySizeEnum, image_size_map
-from .connection import db
-from .base import BaseMongoDB
-
 import requests
 import imagehash
-from time import time
-from PIL import Image as PilImage
-from typing import List
 from io import BytesIO
-from base_models import image_directory
+from PIL import Image as PilImage
+from pydantic import BaseModel
+from typing import ClassVar, Optional, List
+
+from base_models import QuerySizeEnum, image_size_map, image_directory
+from .connection import db
+from .base import BaseMongoDB
+import base64
+
 
 class Size(BaseModel):
     height: int
@@ -66,13 +65,24 @@ class Image(BaseMongoDB):
     async def search_by_image(
         cls, url: Optional[str], attachment: str
     ) -> List['Image']:
+        """ Find similar images by comparing image hashes """
+
         similar_images = []
         if url:
             response = requests.get(url)
-            og_image_hash = imagehash.average_hash(PilImage.open(BytesIO(response.content)))
+            og_image_hash = imagehash.average_hash(
+                PilImage.open(BytesIO(response.content))
+            )
+        elif attachment:
+            og_image_hash = imagehash.average_hash(
+                PilImage.open(BytesIO(base64.b64decode(attachment)))
+            )
         for image in await cls.find_all():
-            compare_image_hash = imagehash.average_hash(PilImage.open(f'{image_directory}/{image.file_name}'))
+            compare_image_hash = imagehash.average_hash(
+                PilImage.open(f'{image_directory}/{image.file_name}')
+            )
             difference = og_image_hash - compare_image_hash
-            if difference <= 20:
-                print(difference)
-                print(image)
+            if difference <= 10:
+                similar_images.append(image)
+
+        return similar_images
