@@ -19,7 +19,6 @@ An asynchronous plant image repository API. You can find it deployed at: [http:/
 - Plant identification by image
 - Plant idenfitication by characteristics
 - CRUD operations on plants and images
-- Deployment
 
 ## Start the server
 ```
