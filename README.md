@@ -1,4 +1,4 @@
-# Plantidex
+# plantidex
 An asynchronous plant image repository API.
 
 ## Motivation
